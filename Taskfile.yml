@@ -1,0 +1,49 @@
+version: '3'
+
+tasks:
+  dev:
+    desc: "Run the development server with live reloading"
+    cmds:
+      - air
+    deps: [install-air]
+    silent: true
+
+  build-docker:
+    desc: "Build Docker image"
+    cmds:
+      - docker build -t myapp:latest .
+    silent: false
+
+  test:
+    desc: "Run tests and generate coverage report"
+    cmds:
+      - go test ./... -coverprofile=coverage.out
+      - go tool cover -html=coverage.out -o coverage.html
+    silent: false
+
+  test-watch:
+    desc: "Watch .go files and rerun tests on change"
+    cmds:
+      - task: test
+    sources:
+      - "*.go"
+      - "**/*.go"
+    method: checksum
+    silent: false
+
+  install-air:
+    desc: "Install Air for live reloading (if not installed)"
+    cmds:
+      - go install github.com/cosmtrek/air@latest
+    status: 
+      - test -f $(go env GOPATH)/bin/air || echo "Air not installed"
+    silent: true
+
+  build:
+    desc: "Build the application binary"
+    cmds:
+      - go build -o bin/hello ./...
+    silent: false
+
+
+
