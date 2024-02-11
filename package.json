@@ -1,8 +1,4 @@
 {
-  "name": "hello-go-npm",
-  "version": "1.0.0",
-  "description": "hello",
-  "main": "index.js",
   "scripts": {
     "install": "npm run -s install:godeps",
     "install:godeps": "go mod tidy",
@@ -11,9 +7,6 @@
     "test": "task test",
     "test:watch": "task test-watch --watch"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@go-task/cli": "^3.34.1"
   }
